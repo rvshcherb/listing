@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { Listing } from './components/Listing';
+import * as data from './data/etsy';
+
+const items = Array.from(JSON.parse(JSON.stringify(data)))
 
 function App() {
+
+  const renderPrice = (currency, price) => {
+    switch(currency) {
+      case 'USD':
+        return <p className="item-price">&#36; {`${price}`}</p>;
+      case 'EUR':
+        return <p className="item-price">&euro; {`${price}`}</p>;
+      default:
+        return <p className="item-price">{`${price} ${currency}`}</p>;
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Listing items={items} renderPrice={renderPrice} />
     </div>
   );
 }
